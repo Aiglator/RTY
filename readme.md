@@ -116,4 +116,3 @@ cd ecom-kimono
 ---
 📌 Ce projet est un défi technique et une opportunité d’apprentissage ! 🚀 Si vous avez des questions, n’hésitez pas à contribuer ou à me contacter.
 
-**Bonne exploration du projet Ecom Kimono !**

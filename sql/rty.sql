@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : mar. 04 mars 2025 à 22:07
+-- Généré le : mar. 04 mars 2025 à 22:41
 -- Version du serveur : 10.4.32-MariaDB
 -- Version de PHP : 8.2.12
 
@@ -45,8 +45,8 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `image`, `title`, `description`, `color`, `price`, `stock`, `size`, `created_at`, `tags`) VALUES
-(23, '.../uploads67c76acf3e978_kimono rouge.jpg', 'hjk', 'az', 'ae', 30.00, 10, 'XS', '2025-03-04 21:04:15', 'kimono'),
-(24, '../uploads/67c76b1641453_kimono bleu.jpg', 'fgh', 'gvhb', 'cgv', 10.00, 10, 'XS,S', '2025-03-04 21:05:26', 'kimono,rouge');
+(24, '../uploads/67c76b1641453_kimono bleu.jpg', 'fgh', 'gvhb', 'cgv', 10.00, 10, 'XS,S', '2025-03-04 21:05:26', 'kimono,rouge'),
+(25, '../uploads/67c7728764c50_kimono_blanc.webp', 'Kimono blanc', 'blanc', 'blanc', 45.00, 5, 'XS,M', '2025-03-04 21:37:11', 'blanc,kimono,');
 
 -- --------------------------------------------------------
 
@@ -115,7 +115,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT pour la table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT pour la table `rty`

@@ -3,7 +3,13 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-require_once '../lib/db.php';
+require_once '../lib/url.php';  
+
+require_once path_lib_register_login();
+
+require_once path_lib_db(); // ✅ Correct et testé
+
+$pdo = getDatabaseConnection();
 
 // Vérifier si un produit était en attente d'ajout après connexion
 if (isset($_SESSION['pending_product'])) {
@@ -15,23 +21,23 @@ if (isset($_SESSION['pending_product'])) {
 if (!isset($_SESSION['user_id'])) {
     $_SESSION['pending_product'] = $_POST; // Sauvegarder le produit temporairement
     $_SESSION['redirect_after_login'] = "add_to_cart.php";
-    header("Location: ../public/login.php");
+    header("Location: " . login()); // Use URL function instead of relative path
     exit();
 }
 
 // Vérifier si les données du produit sont bien envoyées
 if (!isset($_POST['product_id'], $_POST['size'], $_POST['color'])) {
-    header("Location: ../index.php");
+    header("Location: " . index()); // Use URL function instead of relative path
     exit();
 }
 
+$userId = $_SESSION['user_id'];
 $productId = intval($_POST['product_id']);
 $size = htmlspecialchars($_POST['size']);
 $color = htmlspecialchars($_POST['color']);
 $quantity = isset($_POST['quantity']) ? max(1, intval($_POST['quantity'])) : 1;
 
-// Récupérer les détails du produit depuis la base de données
-$pdo = getDatabaseConnection();
+// Vérifier si le produit existe en BDD
 $stmt = $pdo->prepare("SELECT * FROM products WHERE id = :id");
 $stmt->bindValue(':id', $productId, PDO::PARAM_INT);
 $stmt->execute();
@@ -42,34 +48,36 @@ if (!$product) {
     exit();
 }
 
-// Vérifier si le panier existe
-if (!isset($_SESSION['cart'])) {
-    $_SESSION['cart'] = [];
-}
+// Vérifier si le produit est déjà dans le panier en BDD
+$stmt = $pdo->prepare("
+    SELECT id, quantity FROM cart 
+    WHERE user_id = ? AND product_id = ? AND size = ? AND color = ?
+");
+$stmt->execute([$userId, $productId, $size, $color]);
+$existingItem = $stmt->fetch(PDO::FETCH_ASSOC);
 
-// Vérifier si le produit est déjà dans le panier
-$found = false;
-foreach ($_SESSION['cart'] as &$item) {
-    if ($item['product_id'] == $productId && $item['size'] == $size && $item['color'] == $color) {
-        $item['quantity'] += $quantity; // 🚀 Incrémentation si le produit existe déjà
-        $found = true;
-        break;
-    }
-}
-
-// Ajouter un nouveau produit s'il n'existe pas encore dans le panier
-if (!$found) {
-    $_SESSION['cart'][] = [
-        'product_id' => $product['id'],
-        'title' => $product['title'],
-        'price' => $product['price'],
-        'size' => $size,
-        'color' => $color,
-        'quantity' => $quantity,
-        'image' => $product['image']
-    ];
+if ($existingItem) {
+    // 🚀 Si le produit est déjà dans le panier, on met à jour la quantité
+    $newQuantity = $existingItem['quantity'] + $quantity;
+    $stmt = $pdo->prepare("UPDATE cart SET quantity = ? WHERE id = ?");
+    $stmt->execute([$newQuantity, $existingItem['id']]);
+} else {
+    // 🆕 Ajouter le produit dans le panier
+    $stmt = $pdo->prepare("
+        INSERT INTO cart (user_id, product_id, title, price, size, color, quantity) 
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+    ");
+    $stmt->execute([
+        $userId, 
+        $product['id'], 
+        $product['title'], 
+        $product['price'], 
+        $size, 
+        $color, 
+        $quantity, 
+    ]);
 }
 
 // Rediriger vers `cart.php`
-header("Location: cart.php");
+header("Location: " . cart()); // Use URL function instead of relative path
 exit();

@@ -1,7 +1,13 @@
 <?php
 
-require_once '../lib/db.php';
-require_once '../lib/url.php';
+
+require_once '../lib/url.php';  
+
+require_once path_lib_db(); // ✅ Correct et testé
+
+  // à charger en premier (contient lib_db())
+       // maintenant la fonction existe
+
 
 $pdo = getDatabaseConnection();
 
@@ -69,20 +75,20 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <body class="bg-gray-100">
     <header class="flex flex-col sm:flex-row items-center justify-between p-4 bg-white shadow-md">
         <nav class="flex items-center space-x-4 mb-2 sm:mb-0">
-            <a href="index.php" class="text-lg font-semibold text-gray-700 hover:text-gray-900">Accueil</a>
+            <a href="<?= index() ?>" class="text-lg font-semibold text-gray-700 hover:text-gray-900">Accueil</a>
         </nav>
 
         <h1 class="text-2xl font-bold text-gray-800">Ecom Kimono</h1>
 
         <nav class="flex items-center space-x-4">
-            <?php include '../lib/graphic_logout.php'; ?>
+            <?php include path_lib_graphic_logout(); ?>
         </nav>
     </header>
 
     <main class="p-4 sm:p-6">
         <h2 class="text-xl sm:text-2xl font-bold text-gray-800 mb-4 text-center sm:text-left">Nos Produits</h2>
 
-        <form method="GET" action="index.php" class="flex flex-wrap gap-4 items-center mb-4">
+        <form method="GET" action="<?= index() ?>" class="flex flex-wrap gap-4 items-center mb-4">
             <input type="number" name="min_price" placeholder="Prix min (€)" value="<?php echo htmlspecialchars($_GET['min_price'] ?? ''); ?>" class="border p-2 rounded">
             <input type="number" name="max_price" placeholder="Prix max (€)" value="<?php echo htmlspecialchars($_GET['max_price'] ?? ''); ?>" class="border p-2 rounded">
             <select name="size" class="border p-2 rounded">
@@ -102,7 +108,7 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             <?php foreach ($products as $product): ?>
                 <div class="bg-white p-4 rounded-lg shadow-md">
-                    <a href="./public/produit.php?id=<?php echo $product['id']; ?>">
+                    <a href="<?= produit($product['id']) ?>">
                         <img src="<?php echo htmlspecialchars($product['image']); ?>" alt="<?php echo htmlspecialchars($product['title']); ?>" class="w-full h-40 object-cover mb-4 rounded-lg">
                         <h3 class="text-lg font-bold text-gray-700"><?php echo htmlspecialchars($product['title']); ?></h3>
                     </a>
@@ -112,7 +118,7 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <p class="text-sm">Couleur: <?php echo htmlspecialchars($product['color']); ?></p>
                     <p class="text-sm">Taille: <?php echo htmlspecialchars($product['size']); ?></p>
                     <p class="text-sm">Tags: <?php echo htmlspecialchars($product['tags']); ?></p>
-                    <a href="produit.php?id=<?php echo $product['id']; ?>" class="mt-4 block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-center">Voir Détails</a>
+                    <a href="<?= produit($product['id']) ?>" class="mt-4 block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-center">Voir Détails</a>
                 </div>
             <?php endforeach; ?>
         </div>

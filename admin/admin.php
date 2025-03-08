@@ -116,7 +116,11 @@ $products = $pdo->query("SELECT * FROM products")->fetchAll(PDO::FETCH_ASSOC);
     <?php
         include '../lib/graphic_logout.php'
     ?>
-    
+    <nav>
+        <ul class="flex gap-4">
+            <li><a href="admin.php" class="text-blue-600 hover:underline">Gestion des Produits</a></li>
+            <li><a href="stock.php" class="text-blue-600 hover:underline">Gestion des Stocks</a></li>
+    </nav>
     <form action="admin.php" method="POST" enctype="multipart/form-data" class="bg-white p-6 rounded shadow-md">
         <h2 class="text-xl font-bold mb-4">Ajouter un produit</h2>
         <label class="block mb-2">Image:</label>

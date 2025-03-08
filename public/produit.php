@@ -1,8 +1,10 @@
 <?php
 session_start();
-require_once '../lib/db.php';
-require_once '../lib/url.php';
+require_once '../lib/url.php';  
+require_once path_lib_db(); // ✅ Correct et testé
 
+// Assurez-vous que la fonction de génération de token CSRF est disponible
+require_once path_lib_register_login(); // Supposons que ce fichier contient la fonction generateCsrfToken
 
 $pdo = getDatabaseConnection();
 
@@ -39,7 +41,8 @@ $colors = explode(",", $product['color']);
         <p class="text-gray-600"><?php echo htmlspecialchars($product['description']); ?></p>
         <p class="font-bold mt-2 text-lg">Prix: <?php echo number_format($product['price'], 2, ',', ' '); ?> €</p>
 
-        <form method="POST" action="add_to_cart.php">
+        <form method="POST" action="<?php echo url('add_to_cart.php'); ?>">
+            <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars(generateCsrfToken()); ?>">
             <input type="hidden" name="product_id" value="<?php echo $product['id']; ?>">
             
             <label class="block mt-4 font-semibold">Taille :</label>
@@ -58,7 +61,6 @@ $colors = explode(",", $product['color']);
 
             <label class="block mt-4 font-semibold">Quantité :</label>
             <input type="number" name="quantity" value="1" min="1" max="<?php echo $product['stock']; ?>" required class="border p-2 rounded w-full">
-
             <button type="submit" class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 w-full">
                 Ajouter au panier
             </button>

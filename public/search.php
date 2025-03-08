@@ -1,6 +1,7 @@
 <?php
-require_once '../lib/db.php';
 require_once '../lib/url.php';
+require_once path_lib_db();
+
 
 $pdo = getDatabaseConnection();
 

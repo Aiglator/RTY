@@ -1,7 +1,8 @@
 <?php
 session_start();
-require_once '../lib/db.php';
 require_once '../lib/url.php';
+require_once path_lib_db();
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }

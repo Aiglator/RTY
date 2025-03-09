@@ -74,6 +74,7 @@ Bienvenue dans **Ecom Kimono**, une plateforme e-commerce développée en PHP pe
 - **products** : Produits (id, title, description, price, stock, image, size, color, tags)
 - **cart** : Panier (user_id, product_id, size, color, quantity)
 - **orders** : Commandes passées (user_id, order_date, status)
+- **order_items** : Contient les articles des commandes avec les colonnes (order_id, product_id, size, color, quantity, price).
 
 ## ⚙ Installation & Configuration
 ### 1️⃣ Prérequis

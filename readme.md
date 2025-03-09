@@ -99,6 +99,10 @@ mysql -u root -p < sql/rty.sql
 - **Rayan Chattaoui** : `register_login.php`, `login.php` et `register.php`, `db.php`,`url.php`, `SQL` ,`admin.php`,`modif.php`,`stock.php`
 - **Thomas** : `index.php`, `search.php`, `add_to_cart.php`,`order_success.php`,`clear_cart.php`
 - **Yanis** : `cart.php`, `remove_from_cart.php`, `logout.php`, `graphic_logout.php`,`produit.php`
+<a href="https://github.com/Vtom7"><img src="https://github.com/Vtom7.png" width="100px" /></a>
+<a href="https://github.com/yascodev"><img src="https://github.com/yascodev.png" width="100px" /></a>
+
+🎉 Merci à [Vtom7](https://github.com/Vtom7) et [yascodev](https://github.com/yascodev) pour leurs contributions !
 
 ## 📌 Contact & Contributions
 Si vous souhaitez contribuer ou signaler un bug, n'hésitez pas à nous contacter ! 🚀

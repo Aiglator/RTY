@@ -24,7 +24,7 @@ $csrfToken = $_SESSION['csrf_token'];
 // Initialisation du message
 $message = "";
 
-// ✅ Traitement du formulaire pour ajouter ou retirer du stock
+//  Traitement du formulaire pour ajouter ou retirer du stock
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
         die("⚠️ Échec de vérification CSRF. Veuillez réessayer.");
@@ -43,12 +43,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     if ($stmt->execute(['change' => $stockChange, 'id' => $productId])) {
-        $_SESSION['message'] = "✅ Stock mis à jour avec succès.";
+        $_SESSION['message'] = " Stock mis à jour avec succès.";
     } else {
         $_SESSION['message'] = "❌ Erreur lors de la mise à jour du stock.";
     }
 
-    // ✅ Redirection pour éviter le rechargement du formulaire
+    //  Redirection pour éviter le rechargement du formulaire
     header("Location: stock.php");
     exit();
 }
@@ -84,17 +84,22 @@ if (isset($_SESSION['message'])) {
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 p-8">
+<nav>
+    <ul class="flex gap-4">
+        <li><a href="<?php echo url_admin_dashboard(); ?>" class="text-blue-600 hover:underline">Gestion des Produits</a></li>
+    </ul>
+</nav>
     <div class="max-w-4xl mx-auto bg-white shadow-md rounded-lg p-6">
         <h1 class="text-2xl font-bold text-center text-gray-700">🛒 Gestion des Stocks</h1>
 
-        <!-- ✅ Affichage du message après mise à jour -->
+        <!--  Affichage du message après mise à jour -->
         <?php if (!empty($message)): ?>
             <div class="p-3 mt-4 text-white font-semibold rounded <?php echo strpos($message, '✅') !== false ? 'bg-green-500' : 'bg-red-500'; ?>">
                 <?php echo $message; ?>
             </div>
         <?php endif; ?>
 
-        <!-- 🚀 Formulaire de mise à jour du stock -->
+        <!-- Formulaire de mise à jour du stock -->
         <div class="mt-6 bg-gray-50 p-4 rounded-lg shadow">
             <h2 class="text-xl font-semibold mb-4 text-gray-600">🔄 Modifier le stock</h2>
             <form method="POST" class="space-y-3">
@@ -124,7 +129,7 @@ if (isset($_SESSION['message'])) {
             </form>
         </div>
 
-        <!-- 📊 Tableau des stocks actuels -->
+        <!--  Tableau des stocks actuels -->
         <div class="mt-8 bg-gray-50 p-4 rounded-lg shadow">
             <h2 class="text-xl font-semibold mb-4 text-gray-600">📦 Produits et Stock Actuel</h2>
             <table class="w-full border-collapse text-sm">
@@ -149,7 +154,7 @@ if (isset($_SESSION['message'])) {
             </table>
         </div>
 
-        <!-- 🔥 Produits les plus achetés -->
+        <!--  Produits les plus achetés -->
         <div class="mt-8 bg-gray-50 p-4 rounded-lg shadow">
             <h2 class="text-xl font-semibold mb-4 text-gray-600">🔥 Produits les plus achetés</h2>
             <table class="w-full border-collapse text-sm">

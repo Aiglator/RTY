@@ -1,31 +1,31 @@
 <?php
-// ✅ Démarrer la session si elle n'est pas active
+//  Démarrer la session si elle n'est pas active
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// 📌 Inclure les fichiers nécessaires
+//  Inclure les fichiers nécessaires
 require_once '../lib/url.php';
 require_once '../lib/db.php';
 require_once path_lib_register_login();
 
-// ✅ Vérifier que l'utilisateur est bien connecté
+//  Vérifier que l'utilisateur est bien connecté
 if (!isUserLoggedIn()) {
     header("Location: ../public/login.php");
     exit();
 }
 
-// ✅ Récupérer la connexion à la base de données
+//  Récupérer la connexion à la base de données
 $pdo = getDatabaseConnection();
 $userId = $_SESSION['user_id'];
 
-// ✅ Générer un jeton CSRF s'il n'existe pas
+//  Générer un jeton CSRF s'il n'existe pas
 if (!isset($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
 $csrfToken = $_SESSION['csrf_token'];
 
-// 📌 Récupérer les articles du panier depuis la BDD
+//  Récupérer les articles du panier depuis la BDD
 $stmt = $pdo->prepare("SELECT c.id, p.title, p.price, c.size, c.color, c.quantity, (p.price * c.quantity) AS total_price FROM cart c JOIN products p ON c.product_id = p.id WHERE c.user_id = ?");
 $stmt->execute([$userId]);
 $cartItems = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -44,7 +44,7 @@ $cartItems = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <h1 class="text-2xl font-bold text-center text-gray-700">🛒 Mon Panier</h1>
 
         <?php if (!empty($_SESSION['message'])): ?>
-            <div class="mt-4 p-3 text-white font-semibold rounded <?php echo strpos($_SESSION['message'], '✅') !== false ? 'bg-green-500' : 'bg-red-500'; ?>">
+            <div class="mt-4 p-3 text-white font-semibold rounded <?php echo strpos($_SESSION['message'], '') !== false ? 'bg-green-500' : 'bg-red-500'; ?>">
                 <?php echo htmlspecialchars($_SESSION['message']); unset($_SESSION['message']); ?>
             </div>
         <?php endif; ?>
@@ -91,7 +91,7 @@ $cartItems = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </tbody>
             </table>
 
-            <!-- ✅ Affichage du total -->
+            <!--  Affichage du total -->
             <div class="text-right font-bold text-lg sm:text-xl mt-4">
                 Total : <span class="text-green-600"><?php echo number_format($totalPanier, 2, ',', ' '); ?> €</span>
             </div>
@@ -105,7 +105,7 @@ $cartItems = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     </button>
                 </form>
                 <a href="checkout.php" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
-                    ✅ Passer la commande
+                     Passer la commande
                 </a>
             </div>
         <?php endif; ?>

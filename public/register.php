@@ -22,7 +22,7 @@ if (!isset($_SESSION['csrf_token']) || empty($_SESSION['csrf_token'])) {
     <div class="p-6 bg-white rounded-lg shadow-md w-96">
         <h2 class="text-2xl font-bold text-center text-gray-700">Inscription</h2>
 
-        <!-- ✅ Affichage des erreurs -->
+        <!--  Affichage des erreurs -->
         <?php if (!empty($_SESSION['error'])): ?>
             <div class="mt-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
                 <?php 
@@ -32,7 +32,7 @@ if (!isset($_SESSION['csrf_token']) || empty($_SESSION['csrf_token'])) {
             </div>
         <?php endif; ?>
 
-        <form action="../lib/register_login.php" method="POST">
+        <form action="<?php echo path_lib_register_login(); ?>" method="POST">
             <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8'); ?>">
             <input type="hidden" name="action" value="register">
 
@@ -64,6 +64,13 @@ if (!isset($_SESSION['csrf_token']) || empty($_SESSION['csrf_token'])) {
                 S'inscrire
             </button>
         </form>
+
+        <!-- Add login link -->
+        <div class="mt-4 text-center">
+            <a href="<?php echo login(); ?>" class="text-blue-600 hover:text-blue-800">
+                Déjà inscrit ? Connectez-vous
+            </a>
+        </div>
     </div>
 </body>
 </html>

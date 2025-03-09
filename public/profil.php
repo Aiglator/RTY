@@ -26,7 +26,7 @@ if (!$user) {
     die("Utilisateur introuvable.");
 }
 
-// ✅ Générer un token CSRF pour éviter les attaques
+//  Générer un token CSRF pour éviter les attaques
 if (empty($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
@@ -39,7 +39,7 @@ if (isset($_SESSION['message'])) {
     unset($_SESSION['message']); // Supprimer le message après l'affichage
 }
 
-// ✅ Traitement du formulaire de mise à jour
+//  Traitement du formulaire de mise à jour
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Vérification du CSRF
     if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
@@ -63,13 +63,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         if ($stmt->execute()) {
             $_SESSION['username'] = $username;
             $_SESSION['email'] = $email;
-            $_SESSION['message'] = "✅ Profil mis à jour avec succès !";
+            $_SESSION['message'] = " Profil mis à jour avec succès !";
         } else {
             $_SESSION['message'] = "❌ Une erreur est survenue lors de la mise à jour.";
         }
     }
 
-    // ✅ Redirection PRG pour éviter la resoumission du formulaire
+    //  Redirection PRG pour éviter la resoumission du formulaire
     header("Location: profil.php");
     exit();
 }
@@ -87,15 +87,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <div class="max-w-lg mx-auto bg-white p-6 rounded shadow-md">
         <h1 class="text-2xl font-bold mb-4">👤 Mon Profil</h1>
         
-        <!-- ✅ Affichage du message avec PRG -->
+        <!--  Affichage du message avec PRG -->
         <?php if (!empty($message)): ?>
-            <div class="p-3 mb-4 rounded <?php echo strpos($message, '✅') !== false ? 'bg-green-500' : 'bg-red-500'; ?> text-white">
+            <div class="p-3 mb-4 rounded <?php echo strpos($message, '') !== false ? 'bg-green-500' : 'bg-red-500'; ?> text-white">
                 <?php echo $message; ?>
             </div>
         <?php endif; ?>
         
-        <form method="POST" action="profil.php" class="space-y-4">
-            <!-- ✅ Champ caché pour le CSRF -->
+        <form method="POST" action="<?php path_public_profil() ?>" class="space-y-4">
+            <!--  Champ caché pour le CSRF -->
             <input type="hidden" name="csrf_token" value="<?php echo $csrfToken; ?>">
 
             <label class="block text-sm font-medium text-gray-700">Nom d'utilisateur :</label>

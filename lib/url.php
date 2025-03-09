@@ -81,8 +81,63 @@ function path_lib_db() {
     return lib_path('db.php');
 }
 
+// Paths to lib files
 function path_lib_register_login() {
-    return lib_path('register_login.php');
+    return "../lib/register_login.php";
+}
+
+function path_lib_logout() {
+    return "../lib/logout.php";
+}
+
+function path_lib_process_order() {
+    return "../lib/process_order.php";
+}
+
+// Paths to public files
+// Public paths
+function path_public_index() {
+    return "../public/index.php";
+}
+
+function path_public_login() {
+    return "../public/login.php";
+}
+
+function path_public_register() {
+    return "../public/register.php";
+}
+
+function path_public_cart() {
+    return "../public/cart.php";
+}
+
+function path_public_error() {
+    return "../public/error.php";
+}
+
+function path_public_checkout() {
+    return "../public/checkout.php";
+}
+
+function path_public_order_success() {
+    return "../public/order_success.php";
+}
+
+function path_public_add_to_cart() {
+    return "../public/add_to_cart.php";
+}
+
+function path_public_remove_from_cart() {
+    return "../public/remove_from_cart.php";
+}
+
+function path_public_clear_cart() {
+    return "../public/clear_cart.php";
+}
+
+function path_public_profil() {
+    return "../public/profil.php";
 }
 
 function path_lib_graphic_logout() {

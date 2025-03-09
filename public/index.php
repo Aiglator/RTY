@@ -78,6 +78,24 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <a href="<?= index() ?>" class="text-lg font-semibold text-gray-700 hover:text-gray-900">Accueil</a>
         </nav>
 
+        <form method="GET" action="<?= index() ?>" class="flex items-center">
+            <input type="search" 
+                   name="search" 
+                   placeholder="Rechercher un produit..." 
+                   value="<?php echo htmlspecialchars($_GET['search'] ?? ''); ?>" 
+                   class="border rounded-l px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <button type="submit" 
+                    class="bg-blue-600 text-white px-4 py-2 rounded-r hover:bg-blue-700">
+                Rechercher
+            </button>
+            <?php if (!empty($_GET['search'])): ?>
+                <a href="<?= index() ?>" 
+                   class="ml-2 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
+                    Réinitialiser
+                </a>
+            <?php endif; ?>
+        </form>
+
         <h1 class="text-2xl font-bold text-gray-800">Ecom Kimono</h1>
 
         <nav class="flex items-center space-x-4">

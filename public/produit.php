@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once '../lib/url.php';  
-require_once path_lib_db(); // ✅ Correct et testé
+require_once path_lib_db(); //  Correct et testé
 
 // Assurez-vous que la fonction de génération de token CSRF est disponible
 require_once path_lib_register_login(); // Supposons que ce fichier contient la fonction generateCsrfToken
@@ -41,7 +41,7 @@ $colors = explode(",", $product['color']);
         <p class="text-gray-600"><?php echo htmlspecialchars($product['description']); ?></p>
         <p class="font-bold mt-2 text-lg">Prix: <?php echo number_format($product['price'], 2, ',', ' '); ?> €</p>
 
-        <form method="POST" action="<?php echo url('add_to_cart.php'); ?>">
+        <form method="POST" action="<?php echo add(); ?>">
             <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars(generateCsrfToken()); ?>">
             <input type="hidden" name="product_id" value="<?php echo $product['id']; ?>">
             

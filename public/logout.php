@@ -3,6 +3,8 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+require_once '../lib/url.php';
+
 $_SESSION = [];
 session_destroy();
 
@@ -14,6 +16,6 @@ if (ini_get("session.use_cookies")) {
     );
 }
 
-header("Location: ../public/index.php");
+header("Location: " . index());
 exit();
 ?>

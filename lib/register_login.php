@@ -44,11 +44,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     $action = $_POST['action'] ?? '';
 
-    // 🔹 Gestion de l'inscription
-    if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    // Remove this duplicate IF condition
+    // if ($_SERVER["REQUEST_METHOD"] === "POST") {  <- Remove this line
         if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
             $_SESSION['error'] = "⚠️ Vérification CSRF échouée. Veuillez réessayer.";
-            header("Location: ../public/register.php");
             exit;
         }
     
@@ -63,22 +62,22 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             // Vérifications
             if (empty($username) || empty($email) || empty($password) || empty($confirm_password)) {
                 $_SESSION['error'] = "⚠️ Tous les champs sont obligatoires !";
-                header("Location: ../public/register.php");
+                header("Location: " . register());
                 exit();
             }
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 $_SESSION['error'] = "⚠️ Adresse email invalide !";
-                header("Location: ../public/register.php");
+                header("Location: " . register());
                 exit();
             }
             if ($password !== $confirm_password) {
                 $_SESSION['error'] = "⚠️ Les mots de passe ne correspondent pas !";
-                header("Location: ../public/register.php");
+                header("Location: " . register());
                 exit();
             }
             if (strlen($password) < 8) {
                 $_SESSION['error'] = "⚠️ Le mot de passe doit contenir au moins 8 caractères !";
-                header("Location: ../public/register.php");
+                header("Location: " . register());
                 exit();
             }
     
@@ -90,7 +89,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
             if ($checkStmt->fetch()) {
                 $_SESSION['error'] = "⚠️ Ce nom d'utilisateur ou cet email est déjà utilisé !";
-                header("Location: ../public/register.php");
+                header("Location: " . register());
                 exit();
             }
     
@@ -103,15 +102,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
             if ($stmt->execute()) {
                 $_SESSION['success'] = "🎉 Inscription réussie ! Connectez-vous.";
-                header("Location: ../public/login.php");
+                header("Location: " . login());
                 exit;
             } else {
                 $_SESSION['error'] = "⚠️ Une erreur est survenue lors de l'inscription.";
-                header("Location: ../public/register.php");
+                header("Location: " . register());
                 exit;
             }
         }
-    }
+    // }  <- Remove this line
+    
     // 🔹 Gestion de la connexion
     elseif ($action === 'login') {
         $email = filter_var(trim($_POST["email"]), FILTER_SANITIZE_EMAIL);
@@ -119,7 +119,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         if (empty($email) || empty($password)) {
             $_SESSION['error'] = "⚠️ Tous les champs sont obligatoires !";
-            header("Location: ../public/login.php");
+            header("Location: " . login());
             exit;
         }
 
@@ -143,10 +143,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         
             // 🔹 Vérifier s'il y avait un produit en attente d'ajout au panier
             if (isset($_SESSION['pending_product'])) {
-                $_POST = $_SESSION['pending_product']; // Restaurer les données
-                unset($_SESSION['pending_product']); // Supprimer après ajout
-                require_once '../public/add_to_cart.php'; // Use direct path to public directory
-                header("Location: " . BASE_URL . "public/cart.php"); // Use absolute path for redirection
+                $_POST = $_SESSION['pending_product'];
+                unset($_SESSION['pending_product']);
+                require_once path_add_to_cart();
+                header("Location: " . cart());
                 exit();
             }
         
@@ -155,7 +155,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             exit();
         } else {
             $_SESSION['error'] = "⚠️ Email ou mot de passe incorrect !";
-            header("Location: ../public/login.php");
+            header("Location: ".login());
             exit();
         }
     }

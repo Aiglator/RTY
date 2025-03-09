@@ -3,7 +3,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 require_once '../lib/url.php';  
-require_once '../lib/db.php';
+require_once path_lib_db();
 require_once path_lib_register_login();
 
 if (!isUserLoggedIn()) {

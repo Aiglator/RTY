@@ -32,6 +32,8 @@ Bienvenue dans **Ecom Kimono**, une plateforme e-commerce développée en PHP pe
 - Protection XSS via `htmlspecialchars()`.
 - Protection CSRF avec jetons de session.
 
+---
+
 ## 🏗 Structure du Projet
 ```
 📂 ecom-kimono/
@@ -56,6 +58,7 @@ Bienvenue dans **Ecom Kimono**, une plateforme e-commerce développée en PHP pe
 │   ├── profil.php         # Gestion du profil utilisateur
 │   ├── register.php       # Inscription
 │   ├── search.php         # Recherche de produits
+│   ├── order_success.php  # Confirmation de commande
 │
 ├── 📂 sql/
 │   ├── rty.sql            # Script de base de données
@@ -96,14 +99,13 @@ mysql -u root -p < sql/rty.sql
 - **Sécurité** : Bcrypt, CSRF Tokens, Validation des entrées
 
 ## 📌 Répartition des Contributions
-- **Rayan Chattaoui** : `register_login.php`, `login.php` et `register.php`, `db.php`,`url.php`, `SQL` ,`admin.php`,`modif.php`,`stock.php`
-- **Thomas** : `index.php`, `search.php`, `add_to_cart.php`,`order_success.php`,`clear_cart.php`
-- **Yanis** : `cart.php`, `remove_from_cart.php`, `logout.php`, `graphic_logout.php`,`produit.php`
-<a href="https://github.com/Vtom7"><img src="https://github.com/Vtom7.png" width="100px" /></a>
-<a href="https://github.com/yascodev"><img src="https://github.com/yascodev.png" width="100px" /></a>
+- **Rayan Chattaoui** : `register_login.php`, `login.php`, `register.php`, `db.php`, `url.php`, `SQL`, `admin.php`, `modif.php`, `stock.php`
+- **Thomas** : `index.php`, `search.php`, `add_to_cart.php`, `order_success.php`, `clear_cart.php`
+- **Yanis** : `cart.php`, `remove_from_cart.php`, `logout.php`, `graphic_logout.php`, `produit.php`
 
-🎉 Merci à [Vtom7](https://github.com/Vtom7) et [yascodev](https://github.com/yascodev) pour leurs contributions !
+## 🎉 Contributeurs
+| [<img src="https://github.com/Vtom7.png" width="100px"><br><sub>@Vtom7</sub>](https://github.com/Vtom7) | [<img src="https://github.com/yascodev.png" width="100px"><br><sub>@yascodev</sub>](https://github.com/yascodev) |
+|:-:|:-:|
 
 ## 📌 Contact & Contributions
 Si vous souhaitez contribuer ou signaler un bug, n'hésitez pas à nous contacter ! 🚀
-
